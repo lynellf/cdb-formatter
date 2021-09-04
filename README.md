@@ -1,2 +1,3 @@
 # cdb-formatter
- Format Raw cdb json files to something human readable
+
+Format Raw cdb json files to something human readable
