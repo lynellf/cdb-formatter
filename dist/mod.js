@@ -192,14 +192,34 @@ function excludePrefix(prefix) {
         return !id.startsWith("" + prefix);
     };
 }
+function excludeOt(ot) {
+    return function (card) {
+        return card.ot !== ot;
+    };
+}
+function excludeType(type) {
+    return function (card) {
+        return card.type !== type;
+    };
+}
 // how cards are categorized
 // https://discord.com/channels/170601678658076672/208066323429720064/583840491867734026
 var noScripts = excludeLengths(3, 4);
 var noAnime1 = excludePrefix(511);
 var noAnime2 = excludePrefix(512);
 var noAnime3 = excludePrefix(513);
-var nonOfficial = excludeLengths(9, 11);
-var filters = [noScripts, noAnime1, noAnime2, noAnime3, nonOfficial];
+var nonOfficial = excludeLengths(10, 11);
+var noVideogame = excludeOt('VIDEOGAME');
+var noToken = excludeType('MONSTER - TOKEN');
+var filters = [
+    noScripts,
+    noAnime1,
+    noAnime2,
+    noAnime3,
+    nonOfficial,
+    noVideogame,
+    noToken
+];
 function filter(cards) {
     return cards.filter(function (card) { return filters.every(function (filter) { return filter(card); }); });
 }
