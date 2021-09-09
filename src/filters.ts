@@ -28,15 +28,37 @@ function excludePrefix(prefix: number) {
   }
 }
 
+function excludeOt(ot: string) {
+  return (card: Card) => {
+    return card.ot !== ot
+  }
+}
+
+function excludeType(type: string) {
+  return (card: Card) => {
+    return card.type !== type
+  }
+}
+
 // how cards are categorized
 // https://discord.com/channels/170601678658076672/208066323429720064/583840491867734026
 const noScripts = excludeLengths(3, 4)
 const noAnime1 = excludePrefix(511)
 const noAnime2 = excludePrefix(512)
 const noAnime3 = excludePrefix(513)
-const nonOfficial = excludeLengths(9, 11)
+const nonOfficial = excludeLengths(10, 11)
+const noVideogame = excludeOt('VIDEOGAME')
+const noToken = excludeType('MONSTER - TOKEN')
 
-const filters: Filter[] = [noScripts, noAnime1, noAnime2, noAnime3, nonOfficial]
+const filters: Filter[] = [
+  noScripts,
+  noAnime1,
+  noAnime2,
+  noAnime3,
+  nonOfficial,
+  noVideogame,
+  noToken
+]
 
 export default function filter(cards: Card[]) {
   return cards.filter((card) => filters.every((filter) => filter(card)))
