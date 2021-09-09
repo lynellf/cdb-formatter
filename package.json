@@ -1,6 +1,6 @@
 {
   "name": "cdb-formatter",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Format Raw cdb json files to something human readable",
   "main": "dist/mod.js",
   "scripts": {
