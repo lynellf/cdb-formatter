@@ -5,6 +5,7 @@
   "main": "dist/mod.js",
   "scripts": {
     "test": "jest",
+    "test-watch": "jest --watch",
     "build": "rollup --config rollup.config.js --configPlugin typescript"
   },
   "keywords": [],
