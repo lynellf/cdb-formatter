@@ -154,77 +154,63 @@ var ot = {
     0x1000: "HIDDEN",
 };
 
+function format(set) {
+    set.datas; var texts = set.texts;
+    return function (_a) {
+        var _b, _c, _d, _e, _f;
+        var ot$1 = _a.ot, type$1 = _a.type, atk = _a.atk, def = _a.def, level = _a.level, race$1 = _a.race, attribute = _a.attribute, id = _a.id, setcode = _a.setcode;
+        var _g = (_b = texts.find(function (item) { return item.id === id; })) !== null && _b !== void 0 ? _b : {
+            name: 'No Name',
+            desc: 'No Desc'
+        }, name = _g.name, desc = _g.desc;
+        return {
+            id: id,
+            name: name,
+            desc: desc,
+            ot: (_c = ot[ot$1]) !== null && _c !== void 0 ? _c : ot$1,
+            type: (_d = type[type$1]) !== null && _d !== void 0 ? _d : type$1,
+            atk: atk,
+            def: def,
+            level: level,
+            race: (_e = race[race$1]) !== null && _e !== void 0 ? _e : race$1,
+            attribute: (_f = attributes[attribute]) !== null && _f !== void 0 ? _f : attribute,
+            setcode: setcode
+        };
+    };
+}
+
+function excludeLengths(min, max) {
+    return function (card) {
+        var id = "" + card.id;
+        var length = id.length;
+        return length !== min && length !== max;
+    };
+}
+function excludePrefix(prefix) {
+    return function (card) {
+        var id = "" + card.id;
+        return !id.startsWith("" + prefix);
+    };
+}
+// how cards are categorized
+// https://discord.com/channels/170601678658076672/208066323429720064/583840491867734026
+var noScripts = excludeLengths(3, 4);
+var noAnime1 = excludePrefix(511);
+var noAnime2 = excludePrefix(512);
+var noAnime3 = excludePrefix(513);
+var nonOfficial = excludeLengths(9, 11);
+var filters = [noScripts, noAnime1, noAnime2, noAnime3, nonOfficial];
+function filter(cards) {
+    return cards.filter(function (card) { return filters.every(function (filter) { return filter(card); }); });
+}
+
 function extractData(items, outputPath) {
-    var output = items
-        .flatMap(function (set) {
-        var datas = set.datas, texts = set.texts;
-        return datas.map(function (_a) {
-            var _b, _c, _d, _e, _f;
-            var ot$1 = _a.ot, type$1 = _a.type, atk = _a.atk, def = _a.def, level = _a.level, race$1 = _a.race, attribute = _a.attribute, id = _a.id;
-            var _g = (_b = texts.find(function (item) { return item.id === id; })) !== null && _b !== void 0 ? _b : {
-                name: "No Name",
-                desc: "No Desc",
-            }, name = _g.name, desc = _g.desc;
-            return {
-                id: id,
-                name: name,
-                desc: desc,
-                ot: (_c = ot[ot$1]) !== null && _c !== void 0 ? _c : ot$1,
-                type: (_d = type[type$1]) !== null && _d !== void 0 ? _d : type$1,
-                atk: atk,
-                def: def,
-                level: level,
-                race: (_e = race[race$1]) !== null && _e !== void 0 ? _e : race$1,
-                attribute: (_f = attributes[attribute]) !== null && _f !== void 0 ? _f : attribute,
-            };
-        });
-    })
-        .filter(function (card) {
-        return ![
-            "RUSH",
-            "ANIME",
-            "ILLEGAL",
-            "VIDEOGAME",
-            "SPEED",
-            1536,
-            4112,
-        ].includes(card.ot);
-    })
-        .filter(function (card) {
-        return [!card.name.includes("Anime"), !card.name.includes("Speed World")].some(function (bool) { return bool; });
-    })
-        .filter(function (card) {
-        return ![
-            "MISC",
-            "MONSTER - TOKEN",
-            "TOKEN",
-            "MONSTER / ANIME",
-            "SPELL - NORMAL / ANIME",
-            "TRAP - NORMAL / ANIME",
-            "MONSTER - NORMAL / ANIME",
-            "MONSTER - EFFECT / ANIME",
-            "MONSTER - FUSION / ANIME",
-            "MONSTER - RITUAL / ANIME",
-            "MONSTER - SPIRIT / ANIME",
-            "MONSTER - UNION / ANIME",
-            "MONSTER - GEMINI / ANIME",
-            "MONSTER - TUNER / ANIME",
-            "MONSTER - SYNCHRO / ANIME",
-            "MONSTER - TOKEN",
-            "SPELL - QUICKPLAY / ANIME",
-            "SPELL - CONTINUOUS / ANIME",
-            "SPELL - EQUIP / ANIME",
-            "SPELL - FIELD / ANIME",
-            "TRAP - COUNTER / ANIME",
-            "MONSTER - FLIP / ANIME",
-            "MONSTER - TOON / ANIME",
-            "MONSTER - XYZ / ANIME",
-            "MONSTER - PENDULUM / ANIME",
-            "MONSTER - NOMI / ANIME",
-            "MONSTER - LINK / ANIME",
-        ].includes(card.type);
+    var formatted = items.flatMap(function (set) {
+        var datas = set.datas;
+        return datas.map(format(set));
     });
-    fs.writeFileSync(outputPath, JSON.stringify(output));
+    var filtered = filter(formatted);
+    fs.writeFileSync(outputPath, JSON.stringify(filtered));
 }
 
 function main(inputDir, outputPath) {
