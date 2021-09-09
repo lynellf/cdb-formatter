@@ -1,11 +1,12 @@
 {
   "name": "cdb-formatter",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Format Raw cdb json files to something human readable",
   "main": "dist/mod.js",
   "scripts": {
     "test": "jest",
     "build": "rollup --config rollup.config.js"
+    "test-watch": "jest --watch",
   },
   "keywords": [],
   "author": "",
