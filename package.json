@@ -5,7 +5,7 @@
   "main": "dist/mod.js",
   "scripts": {
     "test": "jest",
-    "build": "rollup --config rollup.config.js --configPlugin typescript"
+    "build": "rollup --config rollup.config.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,7 @@
     "rollup": "^2.56.3",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
+    "tslib": "^2.3.1",
     "typescript": "^4.4.2"
   },
   "dependencies": {
