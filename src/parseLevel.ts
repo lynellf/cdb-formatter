@@ -16,6 +16,9 @@ function getNumber(level: string, indexPos = 0): number {
 function decimalToHex(decimal: number): string {
   return decimal.toString(16)
 }
+function all(...args: any[]): boolean {
+  return args.every((arg) => arg)
+}
 
 export default function convertLevel(input: number): {
   scale: number
@@ -24,5 +27,8 @@ export default function convertLevel(input: number): {
   const hexValue = decimalToHex(input)
   const scale = getNumber(hexValue, 0)
   const level = getNumber(hexValue, 6)
-  return { scale, level }
+  const hasScale = scale > 0
+  const hasLevel = level > 0
+  const isPendulum = all(hasScale, hasLevel)
+  return isPendulum ? { scale, level } : { scale: 0, level: scale }
 }
