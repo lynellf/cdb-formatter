@@ -1,5 +1,6 @@
 import type { Item } from './typedefs'
 import * as utils from './utils'
+import parseLevel from './parseLevel'
 
 export default function format(set: Item) {
   const { datas, texts } = set
@@ -8,7 +9,7 @@ export default function format(set: Item) {
     type,
     atk,
     def,
-    level,
+    level: rawLevel,
     race,
     attribute,
     id,
@@ -18,6 +19,7 @@ export default function format(set: Item) {
       name: 'No Name',
       desc: 'No Desc'
     }
+    const { scale, level } = parseLevel(rawLevel)
     return {
       id,
       name,
@@ -27,6 +29,7 @@ export default function format(set: Item) {
       atk,
       def,
       level,
+      scale,
       race: utils.race[race] ?? race,
       attribute: utils.attributes[attribute] ?? attribute,
       setcode
