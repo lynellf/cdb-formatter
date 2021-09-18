@@ -1,6 +1,6 @@
 {
   "name": "cdb-formatter",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Format Raw cdb json files to something human readable",
   "main": "dist/mod.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@rollup/plugin-typescript": "^8.2.5",
+    "@types/immutable": "^3.8.7",
     "@types/jest": "^27.0.1",
     "@types/lodash": "^4.14.172",
     "jest": "^27.1.1",
@@ -26,6 +27,7 @@
     "typescript": "^4.4.2"
   },
   "dependencies": {
+    "immutable": "^4.0.0-rc.15",
     "lodash": "^4.17.21"
   }
 }
