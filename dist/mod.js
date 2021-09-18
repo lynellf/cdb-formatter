@@ -5631,11 +5631,21 @@ function getNumber(level, indexPos) {
 function decimalToHex(decimal) {
     return decimal.toString(16);
 }
+function all() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    return args.every(function (arg) { return arg; });
+}
 function convertLevel(input) {
     var hexValue = decimalToHex(input);
     var scale = getNumber(hexValue, 0);
     var level = getNumber(hexValue, 6);
-    return { scale: scale, level: level };
+    var hasScale = scale > 0;
+    var hasLevel = level > 0;
+    var isPendulum = all(hasScale, hasLevel);
+    return isPendulum ? { scale: scale, level: level } : { scale: 0, level: scale };
 }
 
 function format(set) {
