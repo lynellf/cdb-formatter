@@ -1,17 +1,9 @@
 import app from '../src/mod'
-import sourceFiles from '../src/sourceFiles'
-
-type TRecord = Record<string, unknown>
+import { getCard } from '../src/common'
 
 beforeAll(() => {
   app('./testdata/input', './testdata/output/output.json')
 })
-
-function getCard(query: string): TRecord {
-  const cards = sourceFiles('./testdata/output').flat()
-  const card = cards.find((c) => (c as TRecord).name === query) as TRecord
-  return card
-}
 
 describe('pendulum cards being correctly formatted', () => {
   it('is Odd-Eyes Pendulum Dragon', () => {
