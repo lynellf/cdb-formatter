@@ -6,3 +6,5 @@ export default function main(inputDir: string, outputPath: string) {
   const data = sourceFiles(inputDir) as Item[];
   extractData(data, outputPath);
 }
+
+export const formatData = extractData;
