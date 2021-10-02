@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 var fs = require('fs');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -5733,5 +5735,8 @@ function main(inputDir, outputPath) {
     var data = sourceFiles(inputDir);
     extractData(data, outputPath);
 }
+var formatData = extractData;
 
-module.exports = main;
+exports['default'] = main;
+exports.formatData = formatData;
+//# sourceMappingURL=mod.js.map
