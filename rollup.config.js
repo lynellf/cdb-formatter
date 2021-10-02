@@ -8,7 +8,8 @@ export default {
   output: {
     file: "dist/mod.js",
     format: "cjs",
-    exports: "auto",
+    exports: "named",
+    sourcemap: true,
   },
   plugins: [
     // commonjs(),
